@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { ALL_CATS_PATH, FAVORITES_CATS_PATH } from './constants/paths';
+import { ALL_CATS_PATH, FAVORITES_CATS_PATH } from './constants/paths.router';
 import { AllCats } from './pages/AllCats';
 import { FavoriteCats } from './pages/FavoriteCats';
 import GlobalStyles from 'styles/globalStyles';

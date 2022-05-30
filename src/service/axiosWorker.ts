@@ -1,17 +1,16 @@
 import axios from 'axios';
-import { API_KEY } from '../constants/service';
+import { ALL_IMAGES_API, API_KEY, BASE_URL, FAVORITES_API } from '../constants/service';
 import { CatResponse } from '../models/CatResponse';
 import { currentUser } from '../constants/user';
-import { setItemInStorage } from './localStorage.service';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://api.thecatapi.com/v1/',
+  baseURL: BASE_URL,
   headers: {
     'x-api-key': API_KEY,
   },
 });
 
-export const getCats = async () => await axiosInstance.get('images/search', {
+export const getCats = async () => await axiosInstance.get(ALL_IMAGES_API, {
   params: {
     limit: 15,
     page: 1,
@@ -24,7 +23,7 @@ export const saveCatAsFavorite = async (cat?: CatResponse) => {
     return;
 
   try {
-    await axiosInstance.post('favourites', {
+    await axiosInstance.post(FAVORITES_API, {
       image_id: cat.id,
       sub_id: currentUser,
     });
@@ -38,7 +37,7 @@ export const deleteCatAsFavorite = async (cat?: CatResponse) => {
     return;
 
   try {
-    await axiosInstance.delete(`favourites/${cat.id}`, {
+    await axiosInstance.delete(`${FAVORITES_API}/${cat.id}`, {
       params: {
         sub_id: currentUser,
       }
