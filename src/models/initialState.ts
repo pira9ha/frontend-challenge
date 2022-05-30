@@ -1,8 +1,8 @@
-import { CatResponse } from '../models/CatResponse';
+import { CatResponse } from './CatResponse';
 
-export type InitialState = {
+export interface InitialState {
   load: boolean;
   errorMessage?: string;
   cats?: CatResponse[];
   favorites: CatResponse[];
-};
+}

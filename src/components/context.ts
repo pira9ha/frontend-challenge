@@ -1,5 +1,5 @@
 import React from 'react';
-import { InitialState } from '../constants/initialState';
+import { InitialState } from '../models/initialState';
 
 export const CurrencyContext = React.createContext<InitialState | null>(null);
 

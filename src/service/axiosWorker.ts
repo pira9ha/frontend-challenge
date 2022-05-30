@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiKey } from '../constants/service';
+import { API_KEY } from '../constants/service';
 import { CatResponse } from '../models/CatResponse';
 import { currentUser } from '../constants/user';
 import { setItemInStorage } from './localStorage.service';
@@ -7,7 +7,7 @@ import { setItemInStorage } from './localStorage.service';
 export const axiosInstance = axios.create({
   baseURL: 'https://api.thecatapi.com/v1/',
   headers: {
-    'x-api-key': apiKey,
+    'x-api-key': API_KEY,
   },
 });
 

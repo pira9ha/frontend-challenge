@@ -1,4 +1,4 @@
-import { InitialState } from '../constants/initialState';
+import { InitialState } from '../models/initialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CatResponse } from '../models/CatResponse';
 
@@ -9,12 +9,15 @@ const initialState: InitialState = {
   errorMessage: undefined,
 };
 
-export const CatsReducer = createSlice({
+export const catsSlice = createSlice({
   name: 'catsWorker',
-  initialState: initialState,
+  initialState,
   reducers: {
     getAll: (state, action: PayloadAction<CatResponse[]>) => {
       state.cats = action.payload;
-    }
-  }
+    },
+  },
 });
+
+export const { getAll } = catsSlice.actions;
+export default catsSlice.reducer;
