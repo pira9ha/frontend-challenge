@@ -4,5 +4,8 @@ export const BASE_URL = 'https://api.thecatapi.com/v1/';
 export const FAVORITES_API = 'favourites';
 export const ALL_IMAGES_API = 'images/search';
 
-export const SUCCESS_RESPONSE = 'SUCCESS' as const;
 export const ERROR_MESSAGE = 'Что-то пошло не так, попробуйте позже =(';
+
+export const CURRENT_USER = 'user_31415';
+
+export const LIMIT_IMAGES = 30;

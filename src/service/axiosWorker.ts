@@ -1,7 +1,12 @@
 import axios from 'axios';
-import { ALL_IMAGES_API, API_KEY, BASE_URL, FAVORITES_API } from '../constants/service';
-import { CatResponse } from '../models/CatResponse';
-import { currentUser } from '../constants/user';
+import {
+  ALL_IMAGES_API,
+  API_KEY,
+  BASE_URL,
+  CURRENT_USER,
+  FAVORITES_API
+} from '../constants/service';
+import { CatFavorite, CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -10,11 +15,19 @@ export const axiosInstance = axios.create({
   },
 });
 
-export const getCats = async () => await axiosInstance.get(ALL_IMAGES_API, {
+export const getCats = async (page: number) => await axiosInstance.get(ALL_IMAGES_API, {
   params: {
-    limit: 15,
-    page: 1,
+    limit: 20,
+    page: page,
     order: 'asc',
+  }
+});
+
+export const getFavoritesCats = async (limit: number, page?: number) => await axiosInstance.get(FAVORITES_API, {
+  params: {
+    limit: limit,
+    page: page,
+    sub_id: CURRENT_USER
   }
 });
 
@@ -22,27 +35,31 @@ export const saveCatAsFavorite = async (cat?: CatResponse) => {
   if (!cat)
     return;
 
-  try {
-    await axiosInstance.post(FAVORITES_API, {
-      image_id: cat.id,
-      sub_id: currentUser,
-    });
-  } catch (e) {
-    throw new Error('Не получилось сохранить котика =(');
-  }
+  const res = await axiosInstance.post(FAVORITES_API, {
+    image_id: cat.id,
+    sub_id: CURRENT_USER,
+  });
+  return res.data;
 };
 
-export const deleteCatAsFavorite = async (cat?: CatResponse) => {
+export const deleteCatAsFavorite = async (cat?: FavoritesCatsResponse) => {
   if (!cat)
     return;
 
-  try {
-    await axiosInstance.delete(`${FAVORITES_API}/${cat.id}`, {
-      params: {
-        sub_id: currentUser,
-      }
-    });
-  } catch (e) {
-    throw new Error('Что-то не получилось =(');
-  }
+  return await axiosInstance.delete(`${FAVORITES_API}/${cat.id}`, {
+    params: {
+      sub_id: CURRENT_USER,
+    }
+  });
+};
+
+export const getFavoriteImageById = async (imageId: string) => {
+  if (!imageId)
+    return;
+
+  return await axiosInstance.get(`${FAVORITES_API}/${imageId}`, {
+    params: {
+      sub_id: CURRENT_USER,
+    }
+  }).then((res) => res.data);
 };

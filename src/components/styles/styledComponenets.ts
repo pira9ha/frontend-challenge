@@ -22,6 +22,7 @@ export const NavigationLink = styled(NavLink)`
   &:hover,
   &.active {
     color: white;
+    text-decoration: none;
     background-color: #1E88E5;
   }
 `;
@@ -30,7 +31,7 @@ export const CustomSvg = styled.svg`
   position: absolute;
   bottom: 0;
   right: 0;
-  transition: opacity 150ms ease;
+  transition: opacity 300ms ease;
 `;
 
 export const Heart = styled.button`
@@ -46,7 +47,8 @@ export const Heart = styled.button`
   right: 28px;
   z-index: 2;
   
-  & .inactive {
+  & .inactive,
+  & .clicked {
     opacity: 0;
   }
 
@@ -58,7 +60,18 @@ export const Heart = styled.button`
     & .inactive {
       opacity: 1;
     }
-    & .active {
+    & .active,
+    & .clicked {
+      opacity: 0;
+    }
+  }
+  
+  &:active {
+    & .clicked {
+      opacity: 1;
+    }
+    & .active,
+    & .inactive {
       opacity: 0;
     }
   }
@@ -68,15 +81,16 @@ export const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 48px;
+  margin-bottom: 48px;
 `;
 
 export const Card = styled.div`
   position: relative;
   width: 225px;
   height: 225px;
-  background-color: aquamarine;
+  background-color: #7c7c7c;
   transition: all 0.3s ease;
-  
+
   &:hover {
     transform: scale(1.14);
     cursor: pointer;
@@ -85,7 +99,7 @@ export const Card = styled.div`
     &::after {
       ${CardGradient}
     }
-    
+
     & ${Heart} {
       display: inline;
     }

@@ -1,7 +1,7 @@
 import React from 'react';
-import { InitialState } from '../models/initialState';
+import { CatsPinterestState } from '../models/catsPinterestState';
 
-export const CurrencyContext = React.createContext<InitialState | null>(null);
+export const CurrencyContext = React.createContext<CatsPinterestState | null>(null);
 
 export const useCurrency = () => React.useContext(CurrencyContext);
 

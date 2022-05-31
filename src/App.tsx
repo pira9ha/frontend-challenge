@@ -1,46 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ALL_CATS_PATH, FAVORITES_CATS_PATH } from './constants/paths.router';
 import { AllCats } from './pages/AllCats';
 import { FavoriteCats } from './pages/FavoriteCats';
 import GlobalStyles from 'styles/globalStyles';
 import { NavigationPanel } from './components/Navigation/NavigationPanel';
-import { getCats } from './service/axiosWorker';
-import { CurrencyContext } from './components/context';
-import { InitialState } from './models/initialState';
-import { getItemFromStorage } from './service/localStorage.service';
-import { ERROR_MESSAGE } from './constants/service';
+import { getAllCats, getAllFavoritesCats } from './redux/redux.thunk';
+import { RootState, useAppDispatch } from './redux/store';
+import { getFavoritesFromStorage } from './service/localStorage.service';
+import { useSelector } from 'react-redux';
+import { Loader } from './components/Loader';
+import { LIMIT_IMAGES } from './constants/service';
+import { setFavoritesCatsPageCount } from './redux/catsSlice';
 
 function App() {
-  const [cats, setCats] = useState<InitialState>({ load: true, favorites: [] });
+  const dispatch = useAppDispatch();
+  const { loading, currentPage, favoritesPagesCount } = useSelector((state: RootState) => state.catsWorker);
 
   useEffect(() => {
-    try {
-      getCats().then((res) => {
-          const favoritesFromStorage = getItemFromStorage();
-          setCats((prev) => ({
-            ...prev,
-            load: false,
-            cats: res.data,
-            favorites: favoritesFromStorage
-          }));
-      });
-    } catch (e) {
-      setCats((prev) => ({ ...prev, load: false, errorMessage: ERROR_MESSAGE }));
+    const favorites = getFavoritesFromStorage();
+    if (favorites.length > 0) {
+      let limitImage;
+      if (favorites.length <= LIMIT_IMAGES) {
+        limitImage = favorites.length;
+      } else {
+        limitImage = LIMIT_IMAGES;
+        dispatch(setFavoritesCatsPageCount(Math.round(favorites.length / LIMIT_IMAGES)));
+      }
+      dispatch(getAllFavoritesCats({
+        limit: limitImage,
+        page: favoritesPagesCount === 0 ? undefined : favoritesPagesCount
+      }));
     }
-  }, []);
+    dispatch(getAllCats(currentPage));
+  }, [dispatch]);
 
   return (
-    <CurrencyContext.Provider value={cats}>
+    <>
       <GlobalStyles />
       <NavigationPanel />
       <main>
-      <Routes>
-        <Route path={ALL_CATS_PATH} element={<AllCats />} />
-        <Route path={FAVORITES_CATS_PATH} element={<FavoriteCats />} />
-      </Routes>
+        <Routes>
+          <Route path={ALL_CATS_PATH} element={<AllCats />} />
+          <Route path={FAVORITES_CATS_PATH} element={<FavoriteCats />} />
+        </Routes>
+        {loading && <Loader />}
       </main>
-    </CurrencyContext.Provider>
+    </>
   );
 }
 
