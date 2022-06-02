@@ -1,33 +1,57 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CardContainer } from '../components/styles/styledComponents';
 import { KittenCard } from '../components/Card/KittenCard';
 import { CatResponse } from '../models/CatResponse';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../redux/store';
 import { setCurrentPageWithAllCats } from '../redux/catsSlice';
-import { useInfiniteScroll } from '../service/useInfiniteScroll';
 import { getAllCats } from '../redux/redux.thunk';
 
 export const AllCats = () => {
   const dispatch = useAppDispatch();
   const { cats, currentPage, loading, pagesCount } = useSelector((state: RootState) => state.catsWorker);
-  useInfiniteScroll(getAllCats, currentPage, pagesCount);
   const observeElement = useRef<any>(null);
+  const isMounted = useRef(false);
 
-  const handleObserver = useCallback((node: any) => {
+  useEffect(() => {
+    if (isMounted.current) {
+      if (currentPage > 1 && currentPage < pagesCount) {
+        dispatch(getAllCats(currentPage));
+      }
+    } else {
+      isMounted.current = true;
+    }
+  }, [currentPage]);
+
+  const handleObserver = (entries: IntersectionObserverEntry[]) => {
+    if (entries[0].isIntersecting) {
+      dispatch(setCurrentPageWithAllCats());
+    }
+  };
+
+  useEffect(() => {
+    if (isMounted.current) {
       if (loading) return;
+
+      const option = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1
+      };
+
+      const observer = new IntersectionObserver(handleObserver, option);
       if (observeElement.current) {
-        observeElement.current.disconnect();
-      }
-      observeElement.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          dispatch(setCurrentPageWithAllCats());
+        if (currentPage + 1 >= pagesCount) {
+          observer.disconnect();
         }
-      });
-      if (node) {
-        observeElement.current.observe(node);
+        observer.observe(observeElement.current);
       }
-    },[loading]);
+
+      return () => observer.disconnect();
+    } else {
+      isMounted.current = true;
+    }
+  }, [handleObserver]);
 
   return (
     <CardContainer>
@@ -36,7 +60,7 @@ export const AllCats = () => {
         : cats?.map((cat: CatResponse, index: number) => {
             if (index === cats.length - 1) {
               return (
-                <KittenCard item={cat} key={cat.id} innerRef={handleObserver} />
+                <KittenCard item={cat} key={cat.id} innerRef={observeElement} />
               );
             }
           return (

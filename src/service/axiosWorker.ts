@@ -4,7 +4,7 @@ import {
   API_KEY,
   BASE_URL,
   CURRENT_USER,
-  FAVORITES_API
+  FAVORITES_API, LIMIT_IMAGES
 } from '../constants/service';
 import { CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
 
@@ -17,15 +17,15 @@ export const axiosInstance = axios.create({
 
 export const getCats = async (page: number) => await axiosInstance.get(ALL_IMAGES_API, {
   params: {
-    limit: 20,
+    limit: LIMIT_IMAGES,
     page: page,
     order: 'asc',
   }
 });
 
-export const getFavoritesCats = async (limit: number, page?: number) => await axiosInstance.get(FAVORITES_API, {
+export const getFavoritesCats = async (page?: number) => await axiosInstance.get(FAVORITES_API, {
   params: {
-    limit: limit,
+    limit: LIMIT_IMAGES,
     page: page,
     sub_id: CURRENT_USER
   }

@@ -8,4 +8,4 @@ export const ERROR_MESSAGE = 'Что-то пошло не так, попробу
 
 export const CURRENT_USER = 'user_31415';
 
-export const LIMIT_IMAGES = 30;
+export const LIMIT_IMAGES = 20;

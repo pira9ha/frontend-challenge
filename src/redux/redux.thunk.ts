@@ -1,34 +1,29 @@
 import { AnyAction, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import {
   deleteCatAsFavorite,
-  getCats, getFavoriteImageById,
+  getCats,
+  getFavoriteImageById,
   getFavoritesCats,
   saveCatAsFavorite
 } from '../service/axiosWorker';
 import { AxiosError } from 'axios';
-import {
-  CatFavorite,
-  CatResponse,
-  FavoritesCatsResponse,
-  SaveAsFavoriteResponse
-} from '../models/CatResponse';
+import { CatResponse, FavoritesCatsResponse, SaveAsFavoriteResponse } from '../models/CatResponse';
 import {
   getItemFromFavoritesStorage,
   removeFromStorage,
   setItemInStorage
 } from '../service/localStorage.service';
 import { saveAsFavorite, setErrorMessage } from './catsSlice';
-import { FavoriteRequestParams } from '../models/propsTypes';
 
 export const getAllCats = createAsyncThunk(
   'images/getAll',
   async (page: number) => {
     try {
-      const images = await getCats(page).then((res) => ({
-        pageCount: res.headers['pagination-count'],
-        data: res.data
-      }));
-      return images;
+      return await getCats(page)
+        .then((res) => ({
+          pageCount: res.headers['pagination-count'],
+          data: res.data
+        }));
     } catch (e: any) {
       const error: AxiosError<any> = e;
       if (!error.response)
@@ -38,10 +33,10 @@ export const getAllCats = createAsyncThunk(
 
 export const getAllFavoritesCats = createAsyncThunk(
   'images/getFavorites',
-  async (reqParams: FavoriteRequestParams) => {
+  async (page?: number) => {
     try {
-      const favorites = await getFavoritesCats(reqParams.limit, reqParams.page).then((res) => res.data);
-      return favorites;
+      return await getFavoritesCats(page)
+        .then((res) => res.data);
     } catch (e: any) {
       const error: AxiosError<any> = e;
       if (!error.response)

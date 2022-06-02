@@ -27,11 +27,11 @@ export const LikeButton = ({ item }: CardProps) => {
     <Heart onClick={() => {
       if (!liked) {
         saveFavorite(item, dispatch).then(() => setLiked(true));
-        dispatch(setFavoritesCatsPageCount(Math.ceil(favorites.length / LIMIT_IMAGES)));
+        dispatch(setFavoritesCatsPageCount(~~(favorites.length / LIMIT_IMAGES)));
       } else {
         dispatch(deleteFavoriteCat(item));
         setLiked(false);
-        dispatch(setFavoritesCatsPageCount(Math.ceil(favorites.length / LIMIT_IMAGES)));
+        dispatch(setFavoritesCatsPageCount(~~(favorites.length / LIMIT_IMAGES)));
       }
     }}>
       <SvgOutline />

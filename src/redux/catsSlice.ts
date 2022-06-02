@@ -1,6 +1,6 @@
 import { CatsPinterestState } from '../models/catsPinterestState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CatFavorite, CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
+import { FavoritesCatsResponse } from '../models/CatResponse';
 import { deleteFavoriteCat, getAllCats, getAllFavoritesCats } from './redux.thunk';
 import { ERROR_MESSAGE } from '../constants/service';
 
@@ -9,7 +9,7 @@ const initialState: CatsPinterestState = {
   currentPage: 1,
   pagesCount: 0,
   favoritesPagesCount: 0,
-  currentFavoritesPage: 1,
+  currentFavoritesPage: 0,
   cats: [],
   favorites: [],
   errorMessage: undefined,
@@ -88,6 +88,6 @@ export const {
   setErrorMessage,
   setCurrentPageWithAllCats,
   setCurrentPageWithFavoritesCats,
-  setFavoritesCatsPageCount
+  setFavoritesCatsPageCount,
 } = catsSlice.actions;
 export default catsSlice.reducer;

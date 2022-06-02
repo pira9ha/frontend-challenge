@@ -15,25 +15,16 @@ import { setFavoritesCatsPageCount } from './redux/catsSlice';
 
 function App() {
   const dispatch = useAppDispatch();
-  const { loading, currentPage, favoritesPagesCount } = useSelector((state: RootState) => state.catsWorker);
+  const { loading, currentPage } = useSelector((state: RootState) => state.catsWorker);
 
   useEffect(() => {
     const favorites = getFavoritesFromStorage();
     if (favorites.length > 0) {
-      let limitImage;
-      if (favorites.length <= LIMIT_IMAGES) {
-        limitImage = favorites.length;
-      } else {
-        limitImage = LIMIT_IMAGES;
-        dispatch(setFavoritesCatsPageCount(Math.ceil(favorites.length / LIMIT_IMAGES)));
-      }
-      dispatch(getAllFavoritesCats({
-        limit: limitImage,
-        page: favoritesPagesCount === 0 ? undefined : favoritesPagesCount
-      }));
+      dispatch(setFavoritesCatsPageCount(~~(favorites.length / LIMIT_IMAGES)));
+      dispatch(getAllFavoritesCats());
     }
     dispatch(getAllCats(currentPage));
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { boxShadow, CardGradient } from './styleElements';
 
-export const Header = styled.header`
+export const Header = styled.nav`
   height: 64px;
   background-color: #2196F3;
   display: flex;
