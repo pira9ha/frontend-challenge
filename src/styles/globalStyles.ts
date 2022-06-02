@@ -11,7 +11,11 @@ export default createGlobalStyle`
   }
   
   main {
-    margin: 48px 0 31px 62px;
+    margin: 0 62px;
     text-align: center;
+    
+    &:last-child {
+      margin-bottom: 31px;
+    }
   }
 `;

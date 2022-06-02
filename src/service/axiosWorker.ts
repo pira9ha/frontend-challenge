@@ -6,7 +6,7 @@ import {
   CURRENT_USER,
   FAVORITES_API
 } from '../constants/service';
-import { CatFavorite, CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
+import { CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,

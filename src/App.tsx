@@ -25,7 +25,7 @@ function App() {
         limitImage = favorites.length;
       } else {
         limitImage = LIMIT_IMAGES;
-        dispatch(setFavoritesCatsPageCount(Math.round(favorites.length / LIMIT_IMAGES)));
+        dispatch(setFavoritesCatsPageCount(Math.ceil(favorites.length / LIMIT_IMAGES)));
       }
       dispatch(getAllFavoritesCats({
         limit: limitImage,

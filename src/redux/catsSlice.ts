@@ -26,7 +26,7 @@ export const catsSlice = createSlice({
       state.currentFavoritesPage += 1;
     },
     setFavoritesCatsPageCount: (state, action: PayloadAction<number>) => {
-      state.favoritesPagesCount = action.payload;
+      state.favoritesPagesCount = action.payload + 1;
     },
     setErrorMessage: (state) => {
       state.errorMessage = ERROR_MESSAGE;
@@ -45,7 +45,7 @@ export const catsSlice = createSlice({
       .addCase(getAllCats.fulfilled, (state, action) => {
         state.loading = false;
         const result = action.payload?.data;
-        state.pagesCount = action.payload ? +action.payload.pageCount : -1;
+        state.pagesCount = action.payload ? +action.payload.pageCount + 1 : -1;
         state.cats = [...state.cats, ...result];
       })
       .addCase(getAllCats.rejected, (state) => {

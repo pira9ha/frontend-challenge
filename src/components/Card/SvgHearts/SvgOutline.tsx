@@ -1,4 +1,4 @@
-import { CustomSvg } from '../../styles/styledComponenets';
+import { CustomSvg } from '../../styles/styledComponents';
 import React from 'react';
 
 export const SvgOutline = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heart } from '../styles/styledComponenets';
+import { Heart } from '../styles/styledComponents';
 import { CardProps } from '../../models/propsTypes';
 import { SvgOutline } from './SvgHearts/SvgOutline';
 import { SvgLiked } from './SvgHearts/SvgLiked';
@@ -27,11 +27,11 @@ export const LikeButton = ({ item }: CardProps) => {
     <Heart onClick={() => {
       if (!liked) {
         saveFavorite(item, dispatch).then(() => setLiked(true));
-        dispatch(setFavoritesCatsPageCount(Math.round(favorites.length / LIMIT_IMAGES)));
+        dispatch(setFavoritesCatsPageCount(Math.ceil(favorites.length / LIMIT_IMAGES)));
       } else {
         dispatch(deleteFavoriteCat(item));
         setLiked(false);
-        dispatch(setFavoritesCatsPageCount(Math.round(favorites.length / LIMIT_IMAGES)));
+        dispatch(setFavoritesCatsPageCount(Math.ceil(favorites.length / LIMIT_IMAGES)));
       }
     }}>
       <SvgOutline />

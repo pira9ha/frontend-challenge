@@ -1,16 +1,29 @@
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from '../redux/store';
 
-export const useInfiniteScroll = (loadFunction: any, page: number, pageCount: number) => {
+export const useInfiniteScroll = (
+  loadFunction: any,
+  currentPage: number,
+  pageCount: number,
+  uniqLimit?: number,
+  favorites = false
+) => {
   const dispatch = useAppDispatch();
 
   const onScrollContainer = useCallback(() => {
-    dispatch(loadFunction(page));
-  }, [page]);
+    const params = uniqLimit ? { page: currentPage, limit: uniqLimit } : currentPage;
+    console.log(uniqLimit, params);
+    dispatch(loadFunction(params));
+  }, [currentPage]);
 
   useEffect(() => {
-    if (page > 1 && page > pageCount) {
+    if (favorites && uniqLimit === 0) {
+      console.log('uniqLimit');
+      return;
+    }
+
+    if (currentPage > 1 && currentPage < pageCount) {
       onScrollContainer();
     }
-  }, [page]);
+  }, [currentPage, uniqLimit]);
 };

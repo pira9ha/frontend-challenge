@@ -17,8 +17,8 @@ import {
   removeFromStorage,
   setItemInStorage
 } from '../service/localStorage.service';
-import { saveAsFavorite, setErrorMessage, setFavoritesCatsPageCount } from './catsSlice';
-import { LIMIT_IMAGES } from '../constants/service';
+import { saveAsFavorite, setErrorMessage } from './catsSlice';
+import { FavoriteRequestParams } from '../models/propsTypes';
 
 export const getAllCats = createAsyncThunk(
   'images/getAll',
@@ -38,7 +38,7 @@ export const getAllCats = createAsyncThunk(
 
 export const getAllFavoritesCats = createAsyncThunk(
   'images/getFavorites',
-  async (reqParams: { page?: number, limit: number }) => {
+  async (reqParams: FavoriteRequestParams) => {
     try {
       const favorites = await getFavoritesCats(reqParams.limit, reqParams.page).then((res) => res.data);
       return favorites;

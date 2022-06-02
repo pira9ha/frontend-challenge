@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { CardContainer } from '../components/styles/styledComponenets';
+import { CardContainer } from '../components/styles/styledComponents';
 import { KittenCard } from '../components/Card/KittenCard';
 import { CatResponse } from '../models/CatResponse';
 import { useSelector } from 'react-redux';
@@ -25,7 +25,7 @@ export const AllCats = () => {
         }
       });
       if (node) {
-        observeElement.current?.observe(node);
+        observeElement.current.observe(node);
       }
     },[loading]);
 

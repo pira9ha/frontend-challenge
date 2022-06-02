@@ -1,27 +1,46 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../redux/store';
 import { CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
 import { KittenCard } from '../components/Card/KittenCard';
-import { CardContainer } from '../components/styles/styledComponenets';
+import { CardContainer } from '../components/styles/styledComponents';
 import { useInfiniteScroll } from '../service/useInfiniteScroll';
-import { getAllCats } from '../redux/redux.thunk';
+import { getAllFavoritesCats } from '../redux/redux.thunk';
 import { setCurrentPageWithFavoritesCats } from '../redux/catsSlice';
+import { LIMIT_IMAGES } from '../constants/service';
+import { getFavoritesFromStorage } from '../service/localStorage.service';
 
 export const FavoriteCats = () => {
   const dispatch = useAppDispatch();
   const { favorites, currentFavoritesPage, loading, favoritesPagesCount } = useSelector((state: RootState) => state.catsWorker);
-  useInfiniteScroll(getAllCats, currentFavoritesPage, favoritesPagesCount);
+  const reqParams = useRef(0);
+  useInfiniteScroll(getAllFavoritesCats, currentFavoritesPage, favoritesPagesCount, reqParams.current, true);
   const observeElement = useRef<any>(null);
 
   const handleObserver = useCallback((node: any) => {
-    if (loading || favoritesPagesCount === 0) return;
+    if (
+      loading ||
+      favoritesPagesCount === 0 ||
+      currentFavoritesPage + 1 >= favoritesPagesCount
+    ) return;
     if (observeElement.current) {
       observeElement.current.disconnect();
     }
     observeElement.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        dispatch(setCurrentPageWithFavoritesCats());
+        const favoritesInStorage = getFavoritesFromStorage();
+
+        if (favoritesPagesCount - 1 === currentFavoritesPage + 1) {
+          const favoritesCount = favoritesInStorage.length % LIMIT_IMAGES;
+          console.log( favoritesCount );
+          reqParams.current = favoritesCount;
+          dispatch(setCurrentPageWithFavoritesCats());
+        } else if (favoritesPagesCount - 1 > currentFavoritesPage + 1) {
+          reqParams.current = LIMIT_IMAGES;
+          dispatch(setCurrentPageWithFavoritesCats());
+        } else {
+          return;
+        }
       }
     });
     if (node) {

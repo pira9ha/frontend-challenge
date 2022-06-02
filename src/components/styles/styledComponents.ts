@@ -15,9 +15,13 @@ export const Header = styled.header`
 `;
 
 export const NavigationLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 100%;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  padding: 23px;
+  padding: 0 23px;
   
   &:hover,
   &.active {
@@ -78,17 +82,46 @@ export const Heart = styled.button`
 `;
 
 export const CardContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   flex-wrap: wrap;
   gap: 48px;
-  margin-bottom: 48px;
+  padding: 48px 0;
+
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+    padding: 35px 0;
+  }
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @media (max-width: 780px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+`;
+
+export const CardWrapper = styled.div`
+  max-width: 320px;
+`;
+
+export const CardWrapperFirstChild = styled.div`
+  position:relative;
+  width:100%;
+  padding-bottom:100%;
 `;
 
 export const Card = styled.div`
-  position: relative;
-  width: 225px;
-  height: 225px;
-  background-color: #7c7c7c;
+  position:absolute;
+  width:100%;
+  height:100%;
   transition: all 0.3s ease;
 
   &:hover {

@@ -10,3 +10,8 @@ export type FavoriteCardProps = {
 export type LikeProps = {
   favorite: boolean;
 };
+
+export type FavoriteRequestParams = {
+  page?: number;
+  limit: number;
+};
