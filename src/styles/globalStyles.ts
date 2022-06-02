@@ -13,9 +13,6 @@ export default createGlobalStyle`
   main {
     margin: 0 62px;
     text-align: center;
-    
-    &:last-child {
-      margin-bottom: 31px;
-    }
+    padding-bottom: 31px;
   }
 `;

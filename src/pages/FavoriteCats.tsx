@@ -6,12 +6,26 @@ import { KittenCard } from '../components/Card/KittenCard';
 import { CardContainer } from '../components/styles/styledComponents';
 import { getAllFavoritesCats } from '../redux/redux.thunk';
 import { setCurrentPageWithFavoritesCats } from '../redux/catsSlice';
+import { LostCats } from '../components/LostCats';
+import { getFavoritesFromStorage } from '../service/localStorage.service';
 
 export const FavoriteCats = () => {
   const dispatch = useAppDispatch();
   const { favorites, currentFavoritesPage, loading, favoritesPagesCount } = useSelector((state: RootState) => state.catsWorker);
   const observeElement = useRef<any>(null);
   const isMounted = useRef(false);
+  const favoritesFromStorage = getFavoritesFromStorage();
+
+  useEffect(() => {
+    if (isMounted.current) {
+      console.log(favorites.length);
+      if (favorites.length === 0 && favoritesPagesCount === 1) {
+        dispatch(getAllFavoritesCats(favoritesFromStorage.slice(0)));
+      }
+    } else {
+      isMounted.current = true;
+    }
+  }, [favorites, favoritesPagesCount]);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -24,6 +38,8 @@ export const FavoriteCats = () => {
   }, [currentFavoritesPage]);
 
   const handleObserver = (entities:  IntersectionObserverEntry[]) => {
+    if (loading) return;
+
     if (entities[0].isIntersecting) {
       dispatch(setCurrentPageWithFavoritesCats());
     }
@@ -38,15 +54,20 @@ export const FavoriteCats = () => {
         rootMargin: '0px',
         threshold: 0
       };
-      const observer = new IntersectionObserver(handleObserver, option);
-      if (observeElement.current) {
-        if (currentFavoritesPage + 1 >= favoritesPagesCount) {
-          observer.disconnect();
+
+      if (favorites.length === favoritesFromStorage.length) {
+        dispatch(setCurrentPageWithFavoritesCats(favoritesPagesCount));
+      } else {
+        const observer = new IntersectionObserver(handleObserver, option);
+        if (observeElement.current) {
+          if (currentFavoritesPage + 1 >= favoritesPagesCount) {
+            observer.disconnect();
+          }
+          observer.observe(observeElement.current);
         }
-        observer.observe(observeElement.current);
+        return () => observer.disconnect();
       }
 
-      return () => observer.disconnect();
     } else {
       isMounted.current = true;
     }
@@ -55,7 +76,7 @@ export const FavoriteCats = () => {
   return(
     <CardContainer>
       {favorites.length === 0
-        ? (<span>Тут еще нет ни одного котика =(</span>)
+        ? (<LostCats/>)
         : favorites?.map((cat: FavoritesCatsResponse, index: number) => {
           if (index === favorites.length - 1) {
             return (

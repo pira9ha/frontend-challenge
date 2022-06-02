@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../redux/store';
 import { setCurrentPageWithAllCats } from '../redux/catsSlice';
 import { getAllCats } from '../redux/redux.thunk';
+import { LostCats } from '../components/LostCats';
 
 export const AllCats = () => {
   const dispatch = useAppDispatch();
@@ -56,7 +57,7 @@ export const AllCats = () => {
   return (
     <CardContainer>
       {cats.length === 0
-        ? (<span>Тут еще нет ни одного котика =(</span>)
+        ? (<LostCats/>)
         : cats?.map((cat: CatResponse, index: number) => {
             if (index === cats.length - 1) {
               return (

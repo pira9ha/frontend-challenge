@@ -9,6 +9,7 @@ import { RootState, useAppDispatch } from '../../redux/store';
 import { deleteFavoriteCat, saveFavorite } from '../../redux/redux.thunk';
 import { setFavoritesCatsPageCount } from '../../redux/catsSlice';
 import { LIMIT_IMAGES } from '../../constants/service';
+import { getFavoritesFromStorage } from '../../service/localStorage.service';
 
 export const LikeButton = ({ item }: CardProps) => {
   const dispatch = useAppDispatch();
@@ -25,13 +26,14 @@ export const LikeButton = ({ item }: CardProps) => {
 
   return(
     <Heart onClick={() => {
+      const favoritesFromStorage = getFavoritesFromStorage().length;
       if (!liked) {
         saveFavorite(item, dispatch).then(() => setLiked(true));
-        dispatch(setFavoritesCatsPageCount(~~(favorites.length / LIMIT_IMAGES)));
+        dispatch(setFavoritesCatsPageCount(~~(favoritesFromStorage / LIMIT_IMAGES)));
       } else {
         dispatch(deleteFavoriteCat(item));
         setLiked(false);
-        dispatch(setFavoritesCatsPageCount(~~(favorites.length / LIMIT_IMAGES)));
+        dispatch(setFavoritesCatsPageCount(~~(favoritesFromStorage / LIMIT_IMAGES)));
       }
     }}>
       <SvgOutline />

@@ -144,3 +144,21 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
 `;
+
+export const LostCatContainer = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%);
+  color: rgba(33, 150, 243, 0.6);
+
+  & .text-waiting {
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 21px;
+    text-orientation: sideways;
+  }
+`;

@@ -9,7 +9,7 @@ import { getAllCats, getAllFavoritesCats } from './redux/redux.thunk';
 import { RootState, useAppDispatch } from './redux/store';
 import { getFavoritesFromStorage } from './service/localStorage.service';
 import { useSelector } from 'react-redux';
-import { Loader } from './components/Loader';
+import { CatLoader } from './components/CatLoader';
 import { LIMIT_IMAGES } from './constants/service';
 import { setFavoritesCatsPageCount } from './redux/catsSlice';
 
@@ -35,7 +35,7 @@ function App() {
           <Route path={ALL_CATS_PATH} element={<AllCats />} />
           <Route path={FAVORITES_CATS_PATH} element={<FavoriteCats />} />
         </Routes>
-        {loading && <Loader />}
+        {loading && <CatLoader />}
       </main>
     </>
   );

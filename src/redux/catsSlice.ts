@@ -22,11 +22,12 @@ export const catsSlice = createSlice({
     setCurrentPageWithAllCats: (state) => {
       state.currentPage += 1;
     },
-    setCurrentPageWithFavoritesCats: (state) => {
-      state.currentFavoritesPage += 1;
+    setCurrentPageWithFavoritesCats: (state, action: PayloadAction<number | undefined>) => {
+      state.currentFavoritesPage = action.payload ? action.payload : state.currentFavoritesPage + 1;
     },
     setFavoritesCatsPageCount: (state, action: PayloadAction<number>) => {
       state.favoritesPagesCount = action.payload + 1;
+      state.currentFavoritesPage = 0;
     },
     setErrorMessage: (state) => {
       state.errorMessage = ERROR_MESSAGE;
