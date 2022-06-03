@@ -72,11 +72,17 @@ export const FavoriteCats = () => {
     <CardContainer>
       {favorites.length === 0
         ? (<LostCats/>)
-        : favorites?.map((cat: FavoritesCatsResponse) =>
+        : favorites?.map((cat: FavoritesCatsResponse, index: number) => {
+          if (index === favorites.length - 1) {
+            return (
+              <KittenCard item={cat.image as CatResponse} key={cat.id}  innerRef={observeElement}/>
+            );
+          }
+          return (
             <KittenCard item={cat.image as CatResponse} key={cat.id} />
-          )
+          );
+        })
       }
-      <div ref={observeElement}/>
     </CardContainer>
   );
 };
