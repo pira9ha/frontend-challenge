@@ -34,7 +34,7 @@
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "lint-fix": "tsc --noEmit && eslint src/**/*.ts{,x} --fix",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -b master -d build"
   },
   "eslintConfig": {
     "extends": [
