@@ -4,7 +4,7 @@ export const BASE_URL = 'https://api.thecatapi.com/v1/';
 export const FAVORITES_API = 'favourites';
 export const ALL_IMAGES_API = 'images/search';
 
-export const ERROR_MESSAGE = 'Что-то пошло не так, попробуйте позже =(';
+export const ERROR_MESSAGE = 'Что-то пошло не так!';
 
 export const CURRENT_USER = 'user_31415';
 

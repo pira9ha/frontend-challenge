@@ -29,8 +29,8 @@ export const catsSlice = createSlice({
       state.favoritesPagesCount = action.payload + 1;
       state.currentFavoritesPage = 0;
     },
-    setErrorMessage: (state) => {
-      state.errorMessage = ERROR_MESSAGE;
+    setErrorMessage: (state, action: PayloadAction<string | undefined>) => {
+      state.errorMessage = action.payload;
     },
     saveAsFavorite: (state, action: PayloadAction<FavoritesCatsResponse>) => {
       state.favorites.push(action.payload);

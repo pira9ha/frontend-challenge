@@ -9,6 +9,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     line-height: normal;
     margin: 0;
+    transition: all 0.3s ease;
   }
 
   main {
@@ -16,3 +17,10 @@ export default createGlobalStyle`
     text-align: center;
   }
 `;
+
+export const theme = {
+  basicBlue: '#2196F3',
+  background: 'white',
+  inactiveLink: 'rgba(255, 255, 255, 0.7)',
+  activeNav: '#1E88E5',
+};

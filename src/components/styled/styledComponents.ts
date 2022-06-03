@@ -4,7 +4,7 @@ import { boxShadow, CardGradient } from './styleElements';
 
 export const Header = styled.nav`
   height: 64px;
-  background-color: #2196F3;
+  background-color: ${props => props.theme.basicBlue};
   display: flex;
   align-items: center;
   padding: 0 62px;
@@ -19,15 +19,15 @@ export const NavigationLink = styled(NavLink)`
   align-items: center;
   text-align: center;
   height: 100%;
-  color: rgba(255, 255, 255, 0.7);
+  color: ${props => props.theme.inactiveLink};
   text-decoration: none;
   padding: 0 23px;
-  
+
   &:hover,
   &.active {
-    color: white;
+    color: ${props => props.theme.background};
     text-decoration: none;
-    background-color: #1E88E5;
+    background-color: ${props => props.theme.activeNav};
   }
 `;
 
@@ -35,7 +35,6 @@ export const CustomSvg = styled.svg`
   position: absolute;
   bottom: 0;
   right: 0;
-  transition: opacity 300ms ease;
 `;
 
 export const Heart = styled.button`
@@ -50,7 +49,7 @@ export const Heart = styled.button`
   bottom: 28px;
   right: 28px;
   z-index: 2;
-  
+
   & .inactive,
   & .clicked {
     opacity: 0;
@@ -59,21 +58,23 @@ export const Heart = styled.button`
   & .liked {
     opacity: 1;
   }
-  
+
   &:hover {
     & .inactive {
       opacity: 1;
     }
+
     & .active,
     & .clicked {
       opacity: 0;
     }
   }
-  
+
   &:active {
     & .clicked {
       opacity: 1;
     }
+
     & .active,
     & .inactive {
       opacity: 0;
@@ -93,15 +94,15 @@ export const CardContainer = styled.div`
     gap: 35px;
     padding-top: 35px;
   }
-  
+
   @media (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   @media (max-width: 780px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -113,16 +114,15 @@ export const CardWrapper = styled.div`
 `;
 
 export const CardWrapperFirstChild = styled.div`
-  position:relative;
-  width:100%;
-  padding-bottom:100%;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
 `;
 
 export const Card = styled.div`
-  position:absolute;
-  width:100%;
-  height:100%;
-  transition: all 0.3s ease;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 
   &:hover {
     transform: scale(1.14);
@@ -169,5 +169,45 @@ export const Loader = styled.div`
 
   @media (max-width: 1280px) {
     margin-top: 35px;
+  }
+`;
+
+export const Modal = styled(LostCatContainer)`
+  border-radius: 10px;
+  padding: 20px;
+  transform: translate(0);
+  position: fixed;
+  bottom: 15px;
+  top: auto;
+  right: 15px;
+  background-color: ${props => props.theme.background};
+  text-align: center;
+  z-index: 99;
+  box-shadow: 0 0 20px 10px rgba(18, 46, 65, 0.1);
+
+  & img {
+    width: 150px;
+  }
+`;
+
+export const Button = styled.button`
+  position: absolute;
+  cursor: pointer;
+  top: 15px;
+  right: 15px;
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+
+  & svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  & .close-button_cross {
+    stroke: ${props => props.theme.basicBlue};
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
   }
 `;

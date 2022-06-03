@@ -14,6 +14,7 @@ import {
   setItemInStorage
 } from '../service/localStorage.service';
 import { saveAsFavorite, setErrorMessage } from './catsSlice';
+import { ERROR_MESSAGE } from '../constants/service';
 
 export const getAllCats = createAsyncThunk(
   'images/getAll',
@@ -26,8 +27,7 @@ export const getAllCats = createAsyncThunk(
         }));
     } catch (e: any) {
       const error: AxiosError<any> = e;
-      if (!error.response)
-        throw error;
+      return error.response?.data;
     }
 });
 
@@ -39,8 +39,7 @@ export const getAllFavoritesCats = createAsyncThunk(
         .then((res) => res.data);
     } catch (e: any) {
       const error: AxiosError<any> = e;
-      if (!error.response)
-        throw error;
+      return error.response?.data;
     }
 });
 
@@ -51,8 +50,8 @@ export const saveFavorite = (item: CatResponse) => {
         const favorite = await getFavoriteImageById(res.id);
         setItemInStorage(favorite);
         dispatch(saveAsFavorite(favorite));
-      } catch (e) {
-        dispatch(setErrorMessage());
+      } catch (e: any) {
+        dispatch(setErrorMessage(ERROR_MESSAGE));
       }
     };
 };

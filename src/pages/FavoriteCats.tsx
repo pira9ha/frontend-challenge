@@ -26,7 +26,7 @@ export const FavoriteCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (currentFavoritesPage > 0 && currentFavoritesPage < favoritesPagesCount) {
+      if (currentFavoritesPage > 0 && currentFavoritesPage + 1 < favoritesPagesCount) {
         dispatch(getAllFavoritesCats(currentFavoritesPage));
       }
     } else {

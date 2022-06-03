@@ -16,7 +16,7 @@ export const AllCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (currentPage > 1 && currentPage < pagesCount) {
+      if (currentPage > 1 && currentPage + 1 < pagesCount) {
         dispatch(getAllCats(currentPage));
       }
     } else {
