@@ -86,10 +86,12 @@ export const CardContainer = styled.div`
   grid-template-columns: repeat(5, 1fr);
   flex-wrap: wrap;
   gap: 48px;
+  padding-top: 48px;
 
   @media (max-width: 1280px) {
     grid-template-columns: repeat(4, 1fr);
     gap: 35px;
+    padding-top: 35px;
   }
   
   @media (max-width: 1024px) {
