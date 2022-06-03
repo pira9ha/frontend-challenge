@@ -18,7 +18,7 @@ export const FavoriteCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (loading > 0 && favorites.length === 0 && favoritesPagesCount === 1) {
+      if (favorites.length === 0 && favoritesPagesCount === 1) {
         dispatch(getAllFavoritesCats(favoritesFromStorage.slice(0)));
       }
     }
@@ -72,17 +72,11 @@ export const FavoriteCats = () => {
     <CardContainer>
       {favorites.length === 0
         ? (<LostCats/>)
-        : favorites?.map((cat: FavoritesCatsResponse, index: number) => {
-          if (index === favorites.length - 1) {
-            return (
-              <KittenCard item={cat.image as CatResponse} key={cat.id}  innerRef={observeElement}/>
-            );
-          }
-          return (
+        : favorites?.map((cat: FavoritesCatsResponse) =>
             <KittenCard item={cat.image as CatResponse} key={cat.id} />
-          );
-        })
+          )
       }
+      <div ref={observeElement}/>
     </CardContainer>
   );
 };
