@@ -86,12 +86,10 @@ export const CardContainer = styled.div`
   grid-template-columns: repeat(5, 1fr);
   flex-wrap: wrap;
   gap: 48px;
-  padding: 48px 0;
 
   @media (max-width: 1280px) {
     grid-template-columns: repeat(4, 1fr);
     gap: 35px;
-    padding: 35px 0;
   }
   
   @media (max-width: 1024px) {
@@ -160,5 +158,13 @@ export const LostCatContainer = styled.div`
     font-weight: 600;
     font-size: 21px;
     text-orientation: sideways;
+  }
+`;
+
+export const Loader = styled.div`
+  margin-top: 48px;
+
+  @media (max-width: 1280px) {
+    margin-top: 35px;
   }
 `;

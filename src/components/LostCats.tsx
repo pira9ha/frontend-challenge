@@ -1,4 +1,4 @@
-import dancingCat from '../dancingCat.gif';
+import dancingCat from '../styles/images/dancingCat.gif';
 import React from 'react';
 import { LostCatContainer } from './styles/styledComponents';
 

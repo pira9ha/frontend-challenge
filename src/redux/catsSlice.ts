@@ -5,7 +5,7 @@ import { deleteFavoriteCat, getAllCats, getAllFavoritesCats } from './redux.thun
 import { ERROR_MESSAGE } from '../constants/service';
 
 const initialState: CatsPinterestState = {
-  loading: false,
+  loading: 0,
   currentPage: 1,
   pagesCount: 0,
   favoritesPagesCount: 0,
@@ -40,45 +40,45 @@ export const catsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllCats.pending, (state) => {
-        state.loading = true;
+        state.loading += 1;
         state.errorMessage = undefined;
       })
       .addCase(getAllCats.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loading -= 1;
         const result = action.payload?.data;
         state.pagesCount = action.payload ? +action.payload.pageCount + 1 : -1;
         state.cats = [...state.cats, ...result];
       })
       .addCase(getAllCats.rejected, (state) => {
-        state.loading = false;
+        state.loading -= 1;
         state.errorMessage = ERROR_MESSAGE;
       });
     builder
       .addCase(getAllFavoritesCats.pending, (state) => {
-        state.loading = true;
+        state.loading += 1;
         state.errorMessage = undefined;
       })
       .addCase(getAllFavoritesCats.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loading -= 1;
         if (action.payload) {
           state.favorites = state.favorites.concat(action.payload);
         }
       })
       .addCase(getAllFavoritesCats.rejected, (state) => {
-        state.loading = false;
+        state.loading -= 1;
         state.errorMessage = ERROR_MESSAGE;
       });
     builder
       .addCase(deleteFavoriteCat.pending, (state) => {
-        state.loading = true;
+        state.loading += 1;
         state.errorMessage = undefined;
       })
       .addCase(deleteFavoriteCat.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loading -= 1;
         state.favorites = state.favorites.filter((cat) => cat.id !== action.payload?.id);
       })
       .addCase(deleteFavoriteCat.rejected, (state) => {
-        state.loading = false;
+        state.loading -= 1;
         state.errorMessage = ERROR_MESSAGE;
       });
   },

@@ -1,7 +1,7 @@
 import { CatResponse, FavoritesCatsResponse } from './CatResponse';
 
 export interface CatsPinterestState {
-  loading: boolean;
+  loading: number;
   pagesCount: number;
   favoritesPagesCount: number;
   currentPage: number;

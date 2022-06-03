@@ -35,7 +35,7 @@ function App() {
           <Route path={ALL_CATS_PATH} element={<AllCats />} />
           <Route path={FAVORITES_CATS_PATH} element={<FavoriteCats />} />
         </Routes>
-        {loading && <CatLoader />}
+        {loading > 0 && <CatLoader />}
       </main>
     </>
   );

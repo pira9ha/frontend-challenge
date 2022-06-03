@@ -18,12 +18,9 @@ export const FavoriteCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      console.log(favorites.length);
-      if (favorites.length === 0 && favoritesPagesCount === 1) {
+      if (loading > 0 && favorites.length === 0 && favoritesPagesCount === 1) {
         dispatch(getAllFavoritesCats(favoritesFromStorage.slice(0)));
       }
-    } else {
-      isMounted.current = true;
     }
   }, [favorites, favoritesPagesCount]);
 
@@ -38,7 +35,7 @@ export const FavoriteCats = () => {
   }, [currentFavoritesPage]);
 
   const handleObserver = (entities:  IntersectionObserverEntry[]) => {
-    if (loading) return;
+    if (loading > 0) return;
 
     if (entities[0].isIntersecting) {
       dispatch(setCurrentPageWithFavoritesCats());
@@ -47,7 +44,7 @@ export const FavoriteCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (loading) return;
+      if (loading > 0) return;
 
       const option = {
         root: null,
@@ -68,8 +65,6 @@ export const FavoriteCats = () => {
         return () => observer.disconnect();
       }
 
-    } else {
-      isMounted.current = true;
     }
   }, [loading]);
 
@@ -80,7 +75,7 @@ export const FavoriteCats = () => {
         : favorites?.map((cat: FavoritesCatsResponse, index: number) => {
           if (index === favorites.length - 1) {
             return (
-              <KittenCard item={cat.image as CatResponse} key={cat.id} />
+              <KittenCard item={cat.image as CatResponse} key={cat.id}  innerRef={observeElement}/>
             );
           }
           return (
@@ -88,7 +83,6 @@ export const FavoriteCats = () => {
           );
         })
       }
-      <div ref={observeElement}/>
     </CardContainer>
   );
 };

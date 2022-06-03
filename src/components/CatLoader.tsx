@@ -1,7 +1,8 @@
 import React from 'react';
+import { Loader } from './styles/styledComponents';
 
 export const CatLoader = () => {
   return(
-      <span>... загружаем еще котиков ...</span>
+      <Loader>... загружаем еще котиков ...</Loader>
   );
 };

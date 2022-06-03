@@ -32,7 +32,7 @@ export const AllCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (loading) return;
+      if (loading > 0) return;
 
       const option = {
         root: null,
