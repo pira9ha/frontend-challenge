@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.38be36b0.css",
-    "main.js": "/static/js/main.7776493c.js",
-    "static/js/787.cfeb4579.chunk.js": "/static/js/787.cfeb4579.chunk.js",
-    "static/media/dancingCat.gif": "/static/media/dancingCat.4ab5cc2937baa51f8133.gif",
-    "index.html": "/index.html",
-    "main.38be36b0.css.map": "/static/css/main.38be36b0.css.map",
-    "main.7776493c.js.map": "/static/js/main.7776493c.js.map",
-    "787.cfeb4579.chunk.js.map": "/static/js/787.cfeb4579.chunk.js.map"
+    "main.css": "/frontend-challenge/static/css/main.38be36b0.css",
+    "main.js": "/frontend-challenge/static/js/main.d0604844.js",
+    "static/js/787.cfeb4579.chunk.js": "/frontend-challenge/static/js/787.cfeb4579.chunk.js",
+    "static/media/dancingCat.gif": "/frontend-challenge/static/media/dancingCat.4ab5cc2937baa51f8133.gif",
+    "index.html": "/frontend-challenge/index.html",
+    "main.38be36b0.css.map": "/frontend-challenge/static/css/main.38be36b0.css.map",
+    "main.d0604844.js.map": "/frontend-challenge/static/js/main.d0604844.js.map",
+    "787.cfeb4579.chunk.js.map": "/frontend-challenge/static/js/787.cfeb4579.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.38be36b0.css",
-    "static/js/main.7776493c.js"
+    "static/js/main.d0604844.js"
   ]
 }
