@@ -22,9 +22,9 @@ function App() {
   useEffect(() => {
     const favorites = getFavoritesFromStorage();
     if (favorites.length > 0) {
-      dispatch(setFavoritesCatsPageCount(~~(favorites.length / LIMIT_IMAGES)));
       dispatch(getAllFavoritesCats());
     }
+    dispatch(setFavoritesCatsPageCount(~~(favorites.length / LIMIT_IMAGES)));
     dispatch(getAllCats(currentPage));
   }, []);
 

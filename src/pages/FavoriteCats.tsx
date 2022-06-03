@@ -11,15 +11,29 @@ import { getFavoritesFromStorage } from '../service/localStorage.service';
 
 export const FavoriteCats = () => {
   const dispatch = useAppDispatch();
-  const { favorites, currentFavoritesPage, loading, favoritesPagesCount } = useSelector((state: RootState) => state.catsWorker);
+  const {
+    favorites,
+    currentFavoritesPage,
+    loading,
+    favoritesPagesCount
+  } = useSelector((state: RootState) => state.catsWorker);
   const observeElement = useRef<any>(null);
   const isMounted = useRef(false);
   const favoritesFromStorage = getFavoritesFromStorage();
 
   useEffect(() => {
-    if (isMounted.current) {
-      if (loading === 0 && favorites.length === 0 && favoritesPagesCount === 1) {
+    if (!isMounted.current) {
+      return;
+    }
+    if (
+      loading === 0 &&
+      favorites.length === 0 &&
+      favoritesPagesCount === 1
+    ) {
+      if (favoritesFromStorage.length > 0) {
         dispatch(getAllFavoritesCats(favoritesFromStorage.slice(0)));
+      } else {
+        localStorage.clear();
       }
     }
   }, [favorites, favoritesPagesCount]);
@@ -34,7 +48,7 @@ export const FavoriteCats = () => {
     }
   }, [currentFavoritesPage]);
 
-  const handleObserver = (entities:  IntersectionObserverEntry[]) => {
+  const handleObserver = (entities: IntersectionObserverEntry[]) => {
     if (loading > 0) return;
 
     if (entities[0].isIntersecting) {
@@ -68,18 +82,18 @@ export const FavoriteCats = () => {
     }
   }, [loading]);
 
-  return(
+  return (
     <CardContainer>
       {favorites.length === 0
         ? (<EmptyDataInfo/>)
         : favorites?.map((cat: FavoritesCatsResponse, index: number) => {
           if (index === favorites.length - 1) {
             return (
-              <KittenCard item={cat.image as CatResponse} key={cat.id}  innerRef={observeElement}/>
+              <KittenCard item={cat.image as CatResponse} key={cat.id} innerRef={observeElement}/>
             );
           }
           return (
-            <KittenCard item={cat.image as CatResponse} key={cat.id} />
+            <KittenCard item={cat.image as CatResponse} key={cat.id}/>
           );
         })
       }

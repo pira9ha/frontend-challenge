@@ -20,7 +20,6 @@ export const getCats = async (page: number) => await axiosInstance.get(ALL_IMAGE
   params: {
     limit: LIMIT_IMAGES,
     page: page,
-    order: 'asc',
   }
 });
 
