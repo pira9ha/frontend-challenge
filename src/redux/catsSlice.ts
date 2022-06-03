@@ -1,6 +1,6 @@
 import { CatsPinterestState } from '../models/catsPinterestState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FavoritesCatsResponse } from '../models/CatResponse';
+import { FavoritesCatsResponse } from '../models/catResponse';
 import { deleteFavoriteCat, getAllCats, getAllFavoritesCats } from './redux.thunk';
 import { ERROR_MESSAGE } from '../constants/service';
 

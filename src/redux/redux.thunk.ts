@@ -7,7 +7,7 @@ import {
   saveCatAsFavorite
 } from '../service/axiosWorker';
 import { AxiosError } from 'axios';
-import { CatResponse, FavoritesCatsResponse, SaveAsFavoriteResponse } from '../models/CatResponse';
+import { CatResponse, FavoritesCatsResponse, SaveAsFavoriteResponse } from '../models/catResponse';
 import {
   getItemFromFavoritesStorage,
   removeFromStorage,
@@ -44,15 +44,17 @@ export const getAllFavoritesCats = createAsyncThunk(
     }
 });
 
-export const saveFavorite = async (item: CatResponse, dispatch: Dispatch<AnyAction>) => {
-  try {
-    const res: SaveAsFavoriteResponse = await saveCatAsFavorite(item);
-    const favorite = await getFavoriteImageById(res.id);
-    setItemInStorage(favorite);
-    dispatch(saveAsFavorite(favorite));
-  } catch (e) {
-    dispatch(setErrorMessage());
-  }
+export const saveFavorite = (item: CatResponse) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+      try {
+        const res: SaveAsFavoriteResponse = await saveCatAsFavorite(item);
+        const favorite = await getFavoriteImageById(res.id);
+        setItemInStorage(favorite);
+        dispatch(saveAsFavorite(favorite));
+      } catch (e) {
+        dispatch(setErrorMessage());
+      }
+    };
 };
 
 export const deleteFavoriteCat = createAsyncThunk(

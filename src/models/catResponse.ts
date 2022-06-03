@@ -1,9 +1,10 @@
 export interface CatResponse {
   id: string;
   url: string;
-  breeds: string[];
-  categories: string[];
+  breeds: object[];
+  categories: object[];
 }
+
  export interface CatFavorite extends CatResponse {
   favoriteId: string;
  }

@@ -9,7 +9,7 @@ import { getAllCats, getAllFavoritesCats } from './redux/redux.thunk';
 import { RootState, useAppDispatch } from './redux/store';
 import { getFavoritesFromStorage } from './service/localStorage.service';
 import { useSelector } from 'react-redux';
-import { CatLoader } from './components/CatLoader';
+import { CatLoader } from './components/CatLoader/CatLoader';
 import { LIMIT_IMAGES } from './constants/service';
 import { setFavoritesCatsPageCount } from './redux/catsSlice';
 

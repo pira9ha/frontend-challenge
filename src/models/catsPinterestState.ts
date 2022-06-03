@@ -1,4 +1,4 @@
-import { CatResponse, FavoritesCatsResponse } from './CatResponse';
+import { CatResponse, FavoritesCatsResponse } from './catResponse';
 
 export interface CatsPinterestState {
   loading: number;

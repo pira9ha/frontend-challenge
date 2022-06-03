@@ -165,6 +165,7 @@ export const LostCatContainer = styled.div`
 
 export const Loader = styled.div`
   margin-top: 48px;
+  margin-bottom: 31px;
 
   @media (max-width: 1280px) {
     margin-top: 35px;

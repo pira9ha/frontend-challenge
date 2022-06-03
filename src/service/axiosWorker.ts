@@ -4,9 +4,10 @@ import {
   API_KEY,
   BASE_URL,
   CURRENT_USER,
-  FAVORITES_API, LIMIT_IMAGES
+  FAVORITES_API,
+  LIMIT_IMAGES,
 } from '../constants/service';
-import { CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
+import { CatResponse, FavoritesCatsResponse } from '../models/catResponse';
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,

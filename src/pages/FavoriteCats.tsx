@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../redux/store';
-import { CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
+import { CatResponse, FavoritesCatsResponse } from '../models/catResponse';
 import { KittenCard } from '../components/Card/KittenCard';
-import { CardContainer } from '../components/styles/styledComponents';
+import { CardContainer } from '../components/styled/styledComponents';
 import { getAllFavoritesCats } from '../redux/redux.thunk';
 import { setCurrentPageWithFavoritesCats } from '../redux/catsSlice';
-import { LostCats } from '../components/LostCats';
+import { EmptyDataInfo } from '../components/EmptyDataInfo/EmptyDataInfo';
 import { getFavoritesFromStorage } from '../service/localStorage.service';
 
 export const FavoriteCats = () => {
@@ -18,7 +18,7 @@ export const FavoriteCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (favorites.length === 0 && favoritesPagesCount === 1) {
+      if (loading === 0 && favorites.length === 0 && favoritesPagesCount === 1) {
         dispatch(getAllFavoritesCats(favoritesFromStorage.slice(0)));
       }
     }
@@ -71,7 +71,7 @@ export const FavoriteCats = () => {
   return(
     <CardContainer>
       {favorites.length === 0
-        ? (<LostCats/>)
+        ? (<EmptyDataInfo/>)
         : favorites?.map((cat: FavoritesCatsResponse, index: number) => {
           if (index === favorites.length - 1) {
             return (

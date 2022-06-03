@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { CardContainer } from '../components/styles/styledComponents';
+import { CardContainer } from '../components/styled/styledComponents';
 import { KittenCard } from '../components/Card/KittenCard';
-import { CatResponse } from '../models/CatResponse';
+import { CatResponse } from '../models/catResponse';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../redux/store';
 import { setCurrentPageWithAllCats } from '../redux/catsSlice';
 import { getAllCats } from '../redux/redux.thunk';
-import { LostCats } from '../components/LostCats';
+import { EmptyDataInfo } from '../components/EmptyDataInfo/EmptyDataInfo';
 
 export const AllCats = () => {
   const dispatch = useAppDispatch();
@@ -57,7 +57,7 @@ export const AllCats = () => {
   return (
     <CardContainer>
       {cats.length === 0
-        ? (<LostCats/>)
+        ? (<EmptyDataInfo/>)
         : cats?.map((cat: CatResponse, index: number) => {
             if (index === cats.length - 1) {
               return (

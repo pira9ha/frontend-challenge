@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomSvg } from '../../styles/styledComponents';
+import { CustomSvg } from '../../styled/styledComponents';
 import { LikeProps } from '../../../models/propsTypes';
 
 export const SvgLiked = ({ favorite }: LikeProps) => {

@@ -1,5 +1,5 @@
 import { LikeButton } from './LikeButton';
-import { Card, CardWrapper, CardWrapperFirstChild, Image } from '../styles/styledComponents';
+import { Card, CardWrapper, CardWrapperFirstChild, Image } from '../styled/styledComponents';
 import React from 'react';
 import { CardProps } from '../../models/propsTypes';
 

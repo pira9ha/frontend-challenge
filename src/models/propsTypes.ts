@@ -1,12 +1,10 @@
-import { CatResponse, FavoritesCatsResponse } from './CatResponse';
+import { CatResponse } from './catResponse';
 
 export type CardProps = {
   item: CatResponse;
   innerRef?: any;
 };
-export type FavoriteCardProps = {
-  item: FavoritesCatsResponse;
-};
+
 export type LikeProps = {
   favorite: boolean;
 };

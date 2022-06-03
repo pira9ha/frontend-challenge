@@ -1,4 +1,4 @@
-import { CatResponse, FavoritesCatsResponse } from '../models/CatResponse';
+import { CatResponse, FavoritesCatsResponse } from '../models/catResponse';
 
 export const getFavoritesFromStorage = (key = 'favorites') => {
   const storageData = localStorage.getItem(key);

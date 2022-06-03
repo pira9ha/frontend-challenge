@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader } from './styles/styledComponents';
+import { Loader } from '../styled/styledComponents';
 
 export const CatLoader = () => {
   return(

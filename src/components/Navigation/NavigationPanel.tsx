@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, NavigationLink } from '../styles/styledComponents';
+import { Header, NavigationLink } from '../styled/styledComponents';
 import { ALL_CATS_PATH, FAVORITES_CATS_PATH } from '../../constants/paths.router';
 
 export const NavigationPanel = () => {
