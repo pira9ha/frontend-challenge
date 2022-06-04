@@ -5,7 +5,7 @@ import { CatResponse, FavoritesCatsResponse } from '../models/catResponse';
 import { KittenCard } from '../components/Card/KittenCard';
 import { CardContainer } from '../components/styled/styledComponents';
 import { getAllFavoritesCats } from '../redux/redux.thunk';
-import { setCurrentPageWithFavoritesCats } from '../redux/catsSlice';
+import { addToFavorites, setCurrentPageWithFavoritesCats } from '../redux/catsSlice';
 import { EmptyDataInfo } from '../components/EmptyDataInfo/EmptyDataInfo';
 import { getFavoritesFromStorage } from '../service/localStorage.service';
 
@@ -22,7 +22,7 @@ export const FavoriteCats = () => {
   const favoritesFromStorage = getFavoritesFromStorage();
 
   useEffect(() => {
-    if (!isMounted.current) {
+    if (isMounted.current) {
       return;
     }
     if (
@@ -31,7 +31,7 @@ export const FavoriteCats = () => {
       favoritesPagesCount === 1
     ) {
       if (favoritesFromStorage.length > 0) {
-        dispatch(getAllFavoritesCats(favoritesFromStorage.slice(0)));
+        dispatch(addToFavorites(favoritesFromStorage.slice(0)));
       } else {
         localStorage.clear();
       }
@@ -40,7 +40,7 @@ export const FavoriteCats = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (currentFavoritesPage > 0 && currentFavoritesPage + 1 < favoritesPagesCount) {
+      if (currentFavoritesPage > 0 && currentFavoritesPage < favoritesPagesCount) {
         dispatch(getAllFavoritesCats(currentFavoritesPage));
       }
     } else {
@@ -49,7 +49,9 @@ export const FavoriteCats = () => {
   }, [currentFavoritesPage]);
 
   const handleObserver = (entities: IntersectionObserverEntry[]) => {
-    if (loading > 0) return;
+    if (favorites.length === favoritesFromStorage.length) {
+      return;
+    }
 
     if (entities[0].isIntersecting) {
       dispatch(setCurrentPageWithFavoritesCats());
@@ -66,21 +68,21 @@ export const FavoriteCats = () => {
         threshold: 0
       };
 
-      if (favorites.length === favoritesFromStorage.length) {
-        dispatch(setCurrentPageWithFavoritesCats(favoritesPagesCount));
-      } else {
         const observer = new IntersectionObserver(handleObserver, option);
         if (observeElement.current) {
-          if (currentFavoritesPage + 1 >= favoritesPagesCount) {
+          if (currentFavoritesPage + 1 >= favoritesPagesCount ||
+            favorites.length === favoritesFromStorage.length
+          ) {
             observer.disconnect();
           }
           observer.observe(observeElement.current);
         }
         return () => observer.disconnect();
-      }
 
+    } else {
+      isMounted.current = true;
     }
-  }, [loading]);
+  }, [handleObserver]);
 
   return (
     <CardContainer>

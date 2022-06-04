@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { boxShadow, CardGradient } from './styleElements';
+import { HeartButtonProps } from '../../models/propsTypes';
 
 export const Header = styled.nav`
   height: 64px;
@@ -37,7 +38,7 @@ export const CustomSvg = styled.svg`
   right: 0;
 `;
 
-export const Heart = styled.button`
+export const Heart = styled("button")<HeartButtonProps>`
   border: 0;
   padding: 0;
   width: fit-content;
@@ -49,7 +50,12 @@ export const Heart = styled.button`
   bottom: 28px;
   right: 28px;
   z-index: 2;
-
+  ${props => {
+    if (props.load > 0)
+      return css`
+        pointer-events: none`;
+  }};
+  
   & .inactive,
   & .clicked {
     opacity: 0;
@@ -165,7 +171,6 @@ export const LostCatContainer = styled.div`
 
 export const Loader = styled.div`
   margin-top: 48px;
-  margin-bottom: 31px;
 
   @media (max-width: 1280px) {
     margin-top: 35px;

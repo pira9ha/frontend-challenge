@@ -13,7 +13,7 @@ import { getFavoritesFromStorage } from '../../service/localStorage.service';
 
 export const LikeButton = ({ item }: CardProps) => {
   const dispatch = useAppDispatch();
-  const { favorites } = useSelector((state: RootState) => state.catsWorker);
+  const { favorites, loading } = useSelector((state: RootState) => state.catsWorker);
   const [ liked, setLiked ] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const LikeButton = ({ item }: CardProps) => {
   }, [favorites]);
 
   return(
-    <Heart onClick={() => {
+    <Heart load={loading} onClick={() => {
       const favoritesFromStorage = getFavoritesFromStorage().length;
       if (!liked) {
         dispatch(saveFavorite(item));

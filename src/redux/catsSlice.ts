@@ -36,6 +36,10 @@ export const catsSlice = createSlice({
       state.favorites.push(action.payload);
       state.errorMessage = undefined;
     },
+    addToFavorites: (state, action: PayloadAction<FavoritesCatsResponse[]>) => {
+      state.favorites = state.favorites.concat(action.payload);
+      state.errorMessage = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +65,7 @@ export const catsSlice = createSlice({
       .addCase(getAllFavoritesCats.fulfilled, (state, action) => {
         state.loading -= 1;
         if (action.payload) {
-          state.favorites = state.favorites.concat(action.payload);
+          state.favorites = [...state.favorites, ...action.payload];
         }
       })
       .addCase(getAllFavoritesCats.rejected, (state) => {
@@ -90,5 +94,6 @@ export const {
   setCurrentPageWithAllCats,
   setCurrentPageWithFavoritesCats,
   setFavoritesCatsPageCount,
+  addToFavorites
 } = catsSlice.actions;
 export default catsSlice.reducer;

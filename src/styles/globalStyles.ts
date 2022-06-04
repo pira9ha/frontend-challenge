@@ -13,7 +13,7 @@ export default createGlobalStyle`
   }
 
   main {
-    margin: 0 62px;
+    margin: 0 62px 31px 62px;
     text-align: center;
   }
 `;

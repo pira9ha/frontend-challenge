@@ -9,6 +9,7 @@ import {
 import { AxiosError } from 'axios';
 import { CatResponse, FavoritesCatsResponse, SaveAsFavoriteResponse } from '../models/catResponse';
 import {
+  getFavoritesFromStorage,
   getItemFromFavoritesStorage,
   removeFromStorage,
   setItemInStorage
@@ -35,8 +36,10 @@ export const getAllFavoritesCats = createAsyncThunk(
   'images/getFavorites',
   async (page?: number) => {
     try {
-      return await getFavoritesCats(page)
+      const favorites = getFavoritesFromStorage();
+      const response: FavoritesCatsResponse[] = await getFavoritesCats(page)
         .then((res) => res.data);
+      return response.filter((cat: FavoritesCatsResponse) => favorites.find((item: FavoritesCatsResponse) => item.id === cat.id));
     } catch (e: any) {
       const error: AxiosError<any> = e;
       return error.response?.data;

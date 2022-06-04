@@ -5,6 +5,10 @@ export type CardProps = {
   innerRef?: any;
 };
 
+export type HeartButtonProps = {
+  load: number;
+};
+
 export type LikeProps = {
   favorite: boolean;
 };
